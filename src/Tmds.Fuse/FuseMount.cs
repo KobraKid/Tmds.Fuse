@@ -539,6 +539,11 @@ namespace Tmds.Fuse
                         try
                         {
                             LibFuse.fuse_opt_add_arg(&args, "");
+                            if (_mountOptions.AllowOther)
+                            {
+                                LibFuse.fuse_opt_add_arg(&args, "-o");
+                                LibFuse.fuse_opt_add_arg(&args, "allow_other");
+                            }
 
                             fuse_operations ops;
                             ops.getattr = Marshal.GetFunctionPointerForDelegate(_getattr);
